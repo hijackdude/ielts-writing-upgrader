@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>雅思表达升级器</title>
+  <title>BandLift｜雅思写作表达升级器</title>
   <style>
     :root {
       --ink: #18211d;
@@ -57,6 +57,7 @@
     .hero-panel,
     .quick-panel,
     .tool,
+    .site-footer,
     .result,
     .empty {
       border: 1px solid var(--line);
@@ -106,10 +107,15 @@
     h1 {
       margin: 0;
       max-width: 620px;
-      font-size: clamp(42px, 7vw, 78px);
+      font-size: clamp(38px, 6.2vw, 72px);
       line-height: 0.96;
       letter-spacing: 0;
       color: var(--ink);
+      overflow-wrap: anywhere;
+    }
+
+    .brand-cn {
+      display: block;
     }
 
     .subtitle {
@@ -119,6 +125,18 @@
       font-size: clamp(16px, 2vw, 18px);
       line-height: 1.72;
       overflow-wrap: anywhere;
+    }
+
+    .slogan {
+      display: inline-flex;
+      width: fit-content;
+      margin: 18px 0 0;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: var(--sage-2);
+      color: var(--sage);
+      font-size: 15px;
+      font-weight: 900;
     }
 
     .quick-panel {
@@ -178,6 +196,22 @@
       color: #75462f;
       font-size: 13px;
       line-height: 1.6;
+    }
+
+    .contact-card {
+      margin: 0;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid rgba(160, 93, 63, 0.18);
+      background: #ffffff;
+      color: var(--ink);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .contact-card strong {
+      color: var(--clay);
+      font-weight: 900;
     }
 
     .tool {
@@ -345,6 +379,49 @@
       line-height: 1.6;
     }
 
+    .site-footer {
+      margin-top: 18px;
+      padding: clamp(18px, 3vw, 24px);
+      background: rgba(255, 249, 239, 0.94);
+      box-shadow: 0 14px 42px rgba(55, 43, 31, 0.08);
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .footer-item {
+      padding: 14px;
+      border-radius: 8px;
+      background: #ffffff;
+      border: 1px solid rgba(230, 221, 208, 0.9);
+    }
+
+    .footer-item h2 {
+      margin: 0 0 8px;
+      color: var(--ink);
+      font-size: 15px;
+      line-height: 1.35;
+    }
+
+    .footer-item p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.72;
+    }
+
+    .copyright {
+      margin: 16px 0 0;
+      padding-top: 14px;
+      border-top: 1px solid var(--line);
+      color: #7a5b3e;
+      font-size: 13px;
+      line-height: 1.65;
+    }
+
     @media (max-width: 880px) {
       .header {
         grid-template-columns: 1fr;
@@ -373,6 +450,10 @@
       .outputs {
         grid-template-columns: 1fr;
       }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
     }
 
     @media (max-width: 620px) {
@@ -399,12 +480,17 @@
       }
 
       h1 {
-        font-size: 42px;
+        font-size: 38px;
+        line-height: 1.02;
       }
 
       .subtitle {
         font-size: 15px;
         max-width: 310px;
+      }
+
+      .slogan {
+        font-size: 14px;
       }
 
       .tool {
@@ -433,9 +519,10 @@
       <div class="hero-panel">
         <div>
           <p class="eyebrow">IELTS WRITING & SPEAKING</p>
-          <h1>雅思表达升级器</h1>
+          <h1><span class="brand-en">BandLift</span><span aria-hidden="true">｜</span><span class="brand-cn">雅思写作表达升级器</span></h1>
+          <p class="slogan">普通表达，高分升级</p>
         </div>
-        <p class="subtitle">输入一句英文，生成 Band 6、Band 7、Band 8 三档表达。每次点击都会换句型、换角度，也会给出适合复用的中文讲解。</p>
+        <p class="subtitle">本工具用于帮助雅思考生优化英文表达，通过多档升级示例与解释，提升句式结构与语言质量，增强写作能力。</p>
       </div>
       <aside class="quick-panel" aria-label="升级层级说明">
         <p class="module-label">Upgrade Map</p>
@@ -454,6 +541,7 @@
           </div>
         </div>
         <p class="mini-note">适合做小红书截图，也适合学生反复点几次找更顺手的表达。</p>
+        <p class="contact-card"><strong>商务合作 / 学习交流</strong><br>微信 18797376933（备注：雅思）</p>
       </aside>
     </section>
 
@@ -473,6 +561,24 @@
         <div class="empty">升级后的三个版本会显示在这里。</div>
       </div>
     </section>
+
+    <footer class="site-footer" aria-label="网站基础信息">
+      <div class="footer-grid">
+        <section class="footer-item">
+          <h2>使用条款</h2>
+          <p>本工具仅供学习参考，用户应自行判断内容的适用性。</p>
+        </section>
+        <section class="footer-item">
+          <h2>免责声明</h2>
+          <p>本工具并非官方雅思评分系统，所提供内容仅用于语言学习与表达提升参考，不代表实际考试评分标准。This tool is not affiliated with or endorsed by IELTS.</p>
+        </section>
+        <section class="footer-item">
+          <h2>商务合作 / 学习交流</h2>
+          <p>微信 18797376933（备注：雅思）</p>
+        </section>
+      </div>
+      <p class="copyright">© 2026 BandLift. All rights reserved. 本网站内容未经授权不得复制或用于商业用途。</p>
+    </footer>
   </main>
 
   <script>
