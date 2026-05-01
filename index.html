@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>雅思表达升级器</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Inter", "Segoe UI", "Microsoft YaHei", sans-serif;
+      color: #202124;
+      background: #f6f3ee;
+    }
+
+    .page {
+      width: min(920px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 44px 0;
+    }
+
+    .header {
+      margin-bottom: 22px;
+    }
+
+    .eyebrow {
+      margin: 0 0 8px;
+      color: #7a5b3e;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(34px, 5vw, 58px);
+      line-height: 1.05;
+      letter-spacing: 0;
+      color: #171717;
+    }
+
+    .subtitle {
+      max-width: 640px;
+      margin: 14px 0 0;
+      color: #5d625f;
+      font-size: 17px;
+      line-height: 1.7;
+    }
+
+    .tool {
+      padding: 24px;
+      border: 1px solid #e4ded4;
+      border-radius: 8px;
+      background: #fffdf9;
+      box-shadow: 0 18px 50px rgba(54, 45, 33, 0.08);
+    }
+
+    label {
+      display: block;
+      margin-bottom: 10px;
+      color: #343832;
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 112px;
+      padding: 16px;
+      resize: vertical;
+      border: 1px solid #d8d1c6;
+      border-radius: 8px;
+      outline: none;
+      background: #ffffff;
+      color: #1f211f;
+      font: inherit;
+      font-size: 18px;
+      line-height: 1.55;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    textarea:focus {
+      border-color: #2f765e;
+      box-shadow: 0 0 0 4px rgba(47, 118, 94, 0.13);
+    }
+
+    .actions {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-top: 16px;
+      flex-wrap: wrap;
+    }
+
+    button {
+      min-height: 48px;
+      padding: 0 22px;
+      border: 0;
+      border-radius: 8px;
+      background: #256d57;
+      color: #ffffff;
+      font: inherit;
+      font-size: 16px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: transform 0.18s, background 0.18s;
+    }
+
+    button:hover {
+      background: #1f5f4c;
+      transform: translateY(-1px);
+    }
+
+    .hint {
+      margin: 0;
+      color: #71766f;
+      font-size: 14px;
+    }
+
+    .outputs {
+      display: grid;
+      gap: 16px;
+      margin-top: 22px;
+    }
+
+    .result {
+      padding: 20px;
+      border: 1px solid #e5dfd5;
+      border-radius: 8px;
+      background: #ffffff;
+    }
+
+    .result-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .band {
+      margin: 0;
+      color: #151816;
+      font-size: 20px;
+      font-weight: 900;
+    }
+
+    .tag {
+      flex: 0 0 auto;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: #edf4ef;
+      color: #24644f;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .sentence {
+      margin: 0;
+      color: #202124;
+      font-size: 20px;
+      line-height: 1.6;
+    }
+
+    .explain {
+      margin: 14px 0 0;
+      padding-top: 14px;
+      border-top: 1px solid #eee8df;
+      color: #62675f;
+      font-size: 15px;
+      line-height: 1.7;
+    }
+
+    .empty {
+      padding: 28px 20px;
+      border: 1px dashed #d8d1c6;
+      border-radius: 8px;
+      color: #777267;
+      background: rgba(255, 253, 249, 0.72);
+      text-align: center;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 620px) {
+      .page {
+        width: min(100% - 24px, 920px);
+        padding: 26px 0;
+      }
+
+      .tool {
+        padding: 18px;
+      }
+
+      .result-header {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .sentence {
+        font-size: 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="header">
+      <p class="eyebrow">IELTS WRITING & SPEAKING</p>
+      <h1>雅思表达升级器</h1>
+      <p class="subtitle">输入一句英文，快速生成 Band 6、Band 7、Band 8 三档表达，并附上修改思路。</p>
+    </section>
+
+    <section class="tool" aria-label="雅思表达升级工具">
+      <label for="sourceSentence">输入英文句子</label>
+      <textarea id="sourceSentence" placeholder="例如：Many people think online learning is good for students."></textarea>
+      <div class="actions">
+        <button id="upgradeButton" type="button">升级表达</button>
+        <p class="hint">适合单句改写、口语观点句、写作主题句。</p>
+      </div>
+
+      <div id="outputs" class="outputs">
+        <div class="empty">升级后的三个版本会显示在这里。</div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const textarea = document.querySelector("#sourceSentence");
+    const button = document.querySelector("#upgradeButton");
+    const outputs = document.querySelector("#outputs");
+
+    const simpleWords = [
+      ["utilise", "use"],
+      ["utilize", "use"],
+      ["facilitate", "help"],
+      ["beneficial", "good"],
+      ["detrimental", "bad"],
+      ["essential", "important"],
+      ["significant", "important"],
+      ["consequently", "so"],
+      ["therefore", "so"]
+    ];
+
+    const band7WordSets = [
+      [["is good for", "is useful for"], ["is bad for", "can be harmful to"], ["important", "necessary"], ["help", "support"]],
+      [["is good for", "can improve the situation for"], ["is bad for", "can weaken the position of"], ["people", "individuals"], ["show", "suggest"]],
+      [["is good for", "has a positive effect on"], ["is bad for", "has a negative effect on"], ["make", "create"], ["use", "make use of"]],
+      [["is good for", "can benefit"], ["is bad for", "can damage"], ["get", "gain"], ["very important", "highly important"]],
+      [["is good for", "can be useful for"], ["is bad for", "creates problems for"], ["helps", "supports"], ["good", "valuable"]]
+    ];
+
+    const band8WordSets = [
+      [["is good for", "can offer meaningful advantages to"], ["is bad for", "can undermine"], ["important", "crucial"], ["help", "facilitate"]],
+      [["is good for", "can yield substantial benefits for"], ["is bad for", "can impose considerable costs on"], ["people", "individuals"], ["use", "utilise"]],
+      [["is good for", "can create valuable opportunities for"], ["is bad for", "can act as an obstacle to"], ["make", "generate"], ["show", "illustrate"]],
+      [["is good for", "can be highly beneficial to"], ["is bad for", "can be detrimental to"], ["get", "acquire"], ["very important", "of great significance"]],
+      [["is good for", "can positively influence"], ["is bad for", "can gradually erode"], ["helps", "enables"], ["good", "advantageous"]]
+    ];
+
+    const directions = [
+      {
+        name: "实际价值",
+        simple: "in daily life",
+        band6Reason: "it is useful in daily life",
+        band7: "people can use it in real situations",
+        band8: "its practical relevance is increasingly difficult to overlook",
+        topics: "科技、教育、生活方式"
+      },
+      {
+        name: "长期影响",
+        simple: "over time",
+        band6Reason: "it can bring benefits over time",
+        band7: "it may lead to better long-term results",
+        band8: "its long-term implications deserve closer consideration",
+        topics: "教育、职业发展、环境"
+      },
+      {
+        name: "个人成长",
+        simple: "for personal growth",
+        band6Reason: "it can help personal growth",
+        band7: "it can support personal development",
+        band8: "it may foster a more sustained form of individual development",
+        topics: "教育、青少年成长、工作能力"
+      },
+      {
+        name: "社会变化",
+        simple: "for many people today",
+        band6Reason: "it matters to many people today",
+        band7: "it is connected with changes in modern society",
+        band8: "it reflects a broader shift in contemporary social behaviour",
+        topics: "社会变化、媒体、城市生活"
+      },
+      {
+        name: "效率提升",
+        simple: "with less time and effort",
+        band6Reason: "it can save time and effort",
+        band7: "it can make the process more efficient",
+        band8: "it can streamline decision-making and reduce unnecessary friction",
+        topics: "科技、工作效率、交通"
+      }
+    ];
+
+    const featureNotes = {
+      band6: [
+        "语言点：使用简单句和基础并列结构，适合先把观点说清楚。",
+        "语言点：用 because / so 表达简单因果，口语和小作文观点句都容易复用。",
+        "语言点：词汇保持基础，重点是清楚表达判断和理由。"
+      ],
+      band7: [
+        "语言点：使用状语从句或定语从句，让原因和结果之间的关系更自然。",
+        "语言点：连接词把观点和解释连起来，句子比简单句更完整。",
+        "语言点：用 slightly more formal 的表达替换基础词，适合写作主体段。"
+      ],
+      band8: [
+        "语言点：使用名词化、强调结构或复杂从句，让表达更有学术感。",
+        "语言点：句子重心不只放在原观点上，还能延伸到更抽象的影响。",
+        "语言点：高级词汇和更灵活的主语结构让句子适合作为高分观点句。"
+      ]
+    };
+
+    const band6Patterns = [
+      (idea, direction) => `${capitalizeFirst(idea)}, and ${direction.band6Reason}.`,
+      (idea, direction) => `${capitalizeFirst(idea)}, so ${direction.band6Reason}.`,
+      (idea, direction) => `Many people may agree with this because ${direction.band6Reason}: ${lowerFirst(idea)}.`,
+      (idea, direction) => `This idea is simple: ${lowerFirst(idea)}, and ${direction.band6Reason}.`,
+      (idea, direction) => `${capitalizeFirst(idea)} because ${direction.band6Reason}.`
+    ];
+
+    const band7Patterns = [
+      (idea, direction) => `Although ${lowerFirst(idea)}, the point becomes clearer because ${direction.band7}.`,
+      (idea, direction) => `${capitalizeFirst(idea)}, which means that ${direction.band7}.`,
+      (idea, direction) => `Because ${lowerFirst(idea)}, it is reasonable to say that ${direction.band7}.`,
+      (idea, direction) => `If ${lowerFirst(idea)}, this view becomes stronger, especially because ${direction.band7}.`,
+      (idea, direction) => `${capitalizeFirst(idea)}; however, the argument is more convincing when ${direction.band7}.`
+    ];
+
+    const band8Patterns = [
+      (idea, direction) => `The increasing recognition of the fact that ${lowerFirst(idea)} has made this issue more persuasive, especially as ${direction.band8}.`,
+      (idea, direction) => `Rarely can this issue be assessed fully without acknowledging that ${lowerFirst(idea)}, a point that suggests ${direction.band8}.`,
+      (idea, direction) => `By reframing the issue through a more nuanced lens, one could argue that ${lowerFirst(idea)}, thereby suggesting that ${direction.band8}.`,
+      (idea, direction) => `What makes this argument compelling is not simply that ${lowerFirst(idea)}, but that ${direction.band8}.`,
+      (idea, direction) => `There is a growing tendency to view this issue through the claim that ${lowerFirst(idea)}, which, in turn, suggests that ${direction.band8}.`
+    ];
+
+    const previousChoices = {
+      band6Pattern: -1,
+      band7Pattern: -1,
+      band8Pattern: -1,
+      band6Direction: -1,
+      band7Direction: -1,
+      band8Direction: -1,
+      band7Words: -1,
+      band8Words: -1
+    };
+
+    const choiceHistory = {};
+    let currentDirectionIndices = [];
+
+    function normalizeSentence(text) {
+      const trimmed = text.trim().replace(/\s+/g, " ");
+      if (!trimmed) return "";
+      return /[.!?]$/.test(trimmed) ? trimmed : `${trimmed}.`;
+    }
+
+    function capitalizeFirst(text) {
+      return text.charAt(0).toUpperCase() + text.slice(1);
+    }
+
+    function stripFinalPunctuation(sentence) {
+      return sentence.replace(/[.!?]+$/g, "");
+    }
+
+    function lowerFirst(text) {
+      return text.charAt(0).toLowerCase() + text.slice(1);
+    }
+
+    function escapeRegExp(text) {
+      return text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    }
+
+    function replacePhrases(sentence, pairs) {
+      let result = sentence;
+      [...pairs].sort((a, b) => b[0].length - a[0].length).forEach(([from, to]) => {
+        const pattern = new RegExp(`\\b${escapeRegExp(from)}\\b`, "gi");
+        result = result.replace(pattern, to);
+      });
+      return result;
+    }
+
+    function pickDifferent(list, key, blockedIndexes = []) {
+      if (list.length === 1) return { item: list[0], index: 0 };
+
+      if (!choiceHistory[key]) choiceHistory[key] = [];
+
+      let pool = list
+        .map((item, index) => ({ item, index }))
+        .filter(({ index }) => !choiceHistory[key].includes(index))
+        .filter(({ index }) => !blockedIndexes.includes(index));
+
+      if (!pool.length) {
+        choiceHistory[key] = [];
+        pool = list
+          .map((item, index) => ({ item, index }))
+          .filter(({ index }) => index !== previousChoices[key])
+          .filter(({ index }) => !blockedIndexes.includes(index));
+      }
+
+      if (!pool.length) {
+        pool = list
+          .map((item, index) => ({ item, index }))
+          .filter(({ index }) => index !== previousChoices[key]);
+      }
+
+      const picked = pool[Math.floor(Math.random() * pool.length)];
+      const index = picked.index;
+
+      previousChoices[key] = index;
+      choiceHistory[key].push(index);
+      return picked;
+    }
+
+    function pickDirection(key) {
+      const picked = pickDifferent(directions, key, currentDirectionIndices);
+      currentDirectionIndices.push(picked.index);
+      return picked.item;
+    }
+
+    function makeExplanation(level, idea, direction) {
+      const core = `核心意思：这句话表达的是“${lowerFirst(idea)}”，并补充它在“${direction.name}”上的实际作用。`;
+      const feature = featureNotes[level][Math.floor(Math.random() * featureNotes[level].length)];
+      const use = `可用于：${direction.topics} 等雅思话题，尤其适合说明好处、影响或原因。`;
+
+      return `${core} ${feature} ${use}`;
+    }
+
+    function getCoreIdea(sentence, pairs) {
+      const plainIdea = stripFinalPunctuation(sentence)
+        .replace(/^i\s+(think|believe)\s+(that\s+)?/i, "")
+        .replace(/^it\s+is\s+(widely\s+)?(believed|argued)\s+that\s+/i, "")
+        .replace(/^many\s+people\s+(think|believe)\s+(that\s+)?/i, "")
+        .replace(/^people\s+(think|believe)\s+(that\s+)?/i, "")
+        .trim();
+
+      return replacePhrases(plainIdea || stripFinalPunctuation(sentence), pairs)
+        .trim();
+    }
+
+    function cleanBand6Idea(sentence) {
+      return getCoreIdea(sentence, simpleWords)
+        .replace(/\s*,?\s*which\b.*$/i, "")
+        .replace(/^although\s+/i, "")
+        .replace(/\s*,?\s*although\s+/i, "")
+        .replace(/\s+because\s+/i, " and ")
+        .replace(/\s+whereas\s+/i, " but ")
+        .trim();
+    }
+
+    function makeBand6(sentence) {
+      const idea = cleanBand6Idea(sentence);
+      const pattern = pickDifferent(band6Patterns, "band6Pattern").item;
+      const direction = pickDirection("band6Direction");
+
+      return {
+        sentence: pattern(idea, direction),
+        explanation: makeExplanation("band6", idea, direction)
+      };
+    }
+
+    function makeBand7(sentence) {
+      const wordSet = pickDifferent(band7WordSets, "band7Words").item;
+      const idea = getCoreIdea(sentence, wordSet);
+      const pattern = pickDifferent(band7Patterns, "band7Pattern").item;
+      const direction = pickDirection("band7Direction");
+
+      return {
+        sentence: pattern(idea, direction),
+        explanation: makeExplanation("band7", idea, direction)
+      };
+    }
+
+    function makeBand8(sentence) {
+      const wordSet = pickDifferent(band8WordSets, "band8Words").item;
+      const idea = getCoreIdea(sentence, wordSet);
+      const pattern = pickDifferent(band8Patterns, "band8Pattern").item;
+      const direction = pickDirection("band8Direction");
+
+      return {
+        sentence: pattern(idea, direction),
+        explanation: makeExplanation("band8", idea, direction)
+      };
+    }
+
+    function renderResult(title, tag, sentence, explanation) {
+      return `
+        <article class="result">
+          <div class="result-header">
+            <h2 class="band">${title}</h2>
+            <span class="tag">${tag}</span>
+          </div>
+          <p class="sentence">${sentence}</p>
+          <p class="explain">${explanation}</p>
+        </article>
+      `;
+    }
+
+    function escapeHtml(text) {
+      return text
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    function upgradeSentence() {
+      const original = normalizeSentence(textarea.value);
+
+      if (!original) {
+        outputs.innerHTML = `<div class="empty">先输入一句英文，再点击升级表达。</div>`;
+        textarea.focus();
+        return;
+      }
+
+      currentDirectionIndices = [];
+      const band6 = makeBand6(original);
+      const band7 = makeBand7(original);
+      const band8 = makeBand8(original);
+
+      outputs.innerHTML = [
+        renderResult(
+          "Band 6 版本",
+          "简单清晰",
+          escapeHtml(band6.sentence),
+          band6.explanation
+        ),
+        renderResult(
+          "Band 7 版本",
+          "结构优化",
+          escapeHtml(band7.sentence),
+          band7.explanation
+        ),
+        renderResult(
+          "Band 8 版本",
+          "高级表达",
+          escapeHtml(band8.sentence),
+          band8.explanation
+        )
+      ].join("");
+    }
+
+    button.addEventListener("click", upgradeSentence);
+
+    textarea.addEventListener("keydown", (event) => {
+      if ((event.ctrlKey || event.metaKey) && event.key === "Enter") {
+        upgradeSentence();
+      }
+    });
+  </script>
+</body>
+</html>
