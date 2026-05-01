@@ -8,6 +8,7 @@ A simple one-page web tool for upgrading an English sentence into Band 6, Band 7
 - Generate Band 6, Band 7, and Band 8 rewrites
 - Show practical Chinese explanations for each version
 - Vary sentence structures, directions, and vocabulary across clicks
+- Responsive modular layout for desktop and mobile screenshots
 
 ## Usage
 
